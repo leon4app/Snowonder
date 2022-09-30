@@ -106,7 +106,6 @@
 		E840386F1F0FC4EC003DF6C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E84038761F0FC701003DF6C3 /* ImportCategoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportCategoryTests.swift; sourceTree = "<group>"; };
 		E84038781F0FD18E003DF6C3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		E84038791F0FD18E003DF6C3 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		E84038871F13A5C3003DF6C3 /* ImportBlockDetectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportBlockDetectorTests.swift; sourceTree = "<group>"; };
 		E84038891F13A5E8003DF6C3 /* ImportBlockFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportBlockFormatterTests.swift; sourceTree = "<group>"; };
 		E8B3C6B31EF7CFB500CD7679 /* Snowonder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snowonder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,7 +209,6 @@
 				E81E98941F5D752C00BF0A12 /* README.md */,
 				359C479128E6F778009CF731 /* CHANGELOG.md */,
 				E84038781F0FD18E003DF6C3 /* .gitignore */,
-				E84038791F0FD18E003DF6C3 /* .travis.yml */,
 				E8B3C6B51EF7CFB500CD7679 /* Snowonder */,
 				E8B3C6CD1EF7CFD300CD7679 /* Snowonder Extension */,
 				E8E6983B1F0E5B2D00D50213 /* ImportArtisan */,

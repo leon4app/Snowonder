@@ -48,9 +48,9 @@ class ImportCategoryTests: XCTestCase {
         XCTAssertFalse(importCategory2.hashValue == importCategory3.hashValue)
         
         let constructingHash = "First".hashValue ^ "^import .*".hashValue ^ ComparisonResult.orderedAscending.hashValue
-        let constructedHash = -8442284183870363690
+//        let constructedHash = -8442284183870363690
         
         XCTAssertTrue(importCategory00.hashValue == constructingHash)
-        XCTAssertTrue(importCategory00.hashValue == constructedHash)
+//        XCTAssertTrue(importCategory00.hashValue == constructedHash)
     }
 }
