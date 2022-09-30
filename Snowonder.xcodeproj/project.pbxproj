@@ -97,6 +97,7 @@
 
 /* Begin PBXFileReference section */
 		356B58C525B9B68300F98080 /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
+		359C479128E6F778009CF731 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		E81E98941F5D752C00BF0A12 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E840385F1F0E6266003DF6C3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E84038631F0F78B2003DF6C3 /* open_system_preferences_extensions.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = open_system_preferences_extensions.scpt; sourceTree = "<group>"; };
@@ -207,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				E81E98941F5D752C00BF0A12 /* README.md */,
+				359C479128E6F778009CF731 /* CHANGELOG.md */,
 				E84038781F0FD18E003DF6C3 /* .gitignore */,
 				E84038791F0FD18E003DF6C3 /* .travis.yml */,
 				E8B3C6B51EF7CFB500CD7679 /* Snowonder */,
