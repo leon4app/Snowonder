@@ -16,7 +16,7 @@ open class ImportBlockDetector {
     
     // MARK: - Constant values
     
-    private struct Constant { // TODO: Init these values from JSON on detector init. #13
+    struct Constant { // TODO: Init these values from JSON on detector init. #13
         static let allGroups: [ImportCategoriesGroup] = [swiftGroup, objcGroup]
         
         static let swiftGroup: ImportCategoriesGroup = [
@@ -30,6 +30,8 @@ open class ImportBlockDetector {
             ImportCategory(title: "Local", declarationPattern: "^\\s*(#import) \\s*\".*\".*", sortingComparisonResult: .orderedAscending),
             ImportCategory(title: "Local Include", declarationPattern: "^\\s*(#include) \\s*\".*\".*", sortingComparisonResult: .orderedAscending)
         ]
+        static let ifDefineBegin = ImportCategory(title: "If Define Begin", declarationPattern: "^#ifdef \\s*.*\\n*", sortingComparisonResult: .orderedAscending)
+        static let ifDefineEnd = ImportCategory(title: "If Define End", declarationPattern: "^#endif\\s*\\n*", sortingComparisonResult: .orderedAscending)
     }
     
     // MARK: - Initializers
@@ -81,18 +83,36 @@ open class ImportBlockDetector {
     ///   - group: Import categories group used to detect import declarations.
     /// - Returns: Detected import declarations.
     open func declarations(from lines: [String], using group: ImportCategoriesGroup) -> ImportDeclarations {
-        return lines.filter { (line) -> Bool in
+        var matchLines = [String]()
+        var isInDefineSection = false
+        for line in lines {
+            // Workaround: Skip section wrap in #ifdef
+            if line.matches(pattern: Constant.ifDefineBegin.declarationPattern) {
+                isInDefineSection = true
+                continue
+            }
+            if line.matches(pattern: Constant.ifDefineEnd.declarationPattern) {
+                isInDefineSection = false
+                continue
+            }
+            if isInDefineSection {
+                continue
+            }
+
             var matches = false
-            
+
             for category in group {
                 matches = line.matches(pattern: category.declarationPattern)
                 if matches {
                     break
                 }
             }
-            
-            return matches
+
+            if matches {
+                matchLines.append(line)
+            }
         }
+        return matchLines
     }
 
     /// Detects import declarations based on `lines` parameter and groupes it by import category using `group` parameter.

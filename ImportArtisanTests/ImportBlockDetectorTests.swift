@@ -22,9 +22,11 @@ class ImportBlockDetectorTests: XCTestCase {
         super.tearDown()
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testIfDefinePattern() {
+        assert("#ifdef WBCF_MOVIE_UPLOAD_TEST\n".matches(pattern: ImportBlockDetector.Constant.ifDefineBegin.declarationPattern))
+        assert("#ifdef WBCF_MOVIE_UPLOAD_TEST \n".matches(pattern: ImportBlockDetector.Constant.ifDefineBegin.declarationPattern))
+        assert("#endif \n".matches(pattern: ImportBlockDetector.Constant.ifDefineEnd.declarationPattern))
+        assert("#endif\n".matches(pattern: ImportBlockDetector.Constant.ifDefineEnd.declarationPattern))
     }
 
     func testPerformanceExample() {
