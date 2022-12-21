@@ -30,7 +30,8 @@ open class ImportBlockDetector {
             ImportCategory(title: "Local", declarationPattern: "^\\s*(#import) \\s*\".*\".*", sortingComparisonResult: .orderedAscending),
             ImportCategory(title: "Local Include", declarationPattern: "^\\s*(#include) \\s*\".*\".*", sortingComparisonResult: .orderedAscending)
         ]
-        static let ifDefineBegin = ImportCategory(title: "If Define Begin", declarationPattern: "^#ifdef \\s*.*\\n*", sortingComparisonResult: .orderedAscending)
+        static let ifDefineBegin = ImportCategory(title: "#ifdef Begin", declarationPattern: "^#ifdef \\s*.*\\n*", sortingComparisonResult: .orderedAscending)
+        static let ifMacroBegin = ImportCategory(title: "#if Begin", declarationPattern: "^#if \\s*.*\\n*", sortingComparisonResult: .orderedAscending)
         static let ifDefineEnd = ImportCategory(title: "If Define End", declarationPattern: "^#endif\\s*\\n*", sortingComparisonResult: .orderedAscending)
     }
     
@@ -84,18 +85,18 @@ open class ImportBlockDetector {
     /// - Returns: Detected import declarations.
     open func declarations(from lines: [String], using group: ImportCategoriesGroup) -> ImportDeclarations {
         var matchLines = [String]()
-        var isInDefineSection = false
+        var isInDefineSection = 0
         for line in lines {
             // Workaround: Skip section wrap in #ifdef
-            if line.matches(pattern: Constant.ifDefineBegin.declarationPattern) {
-                isInDefineSection = true
+            if line.matches(pattern: Constant.ifDefineBegin.declarationPattern) || line.matches(pattern: Constant.ifMacroBegin.declarationPattern) {
+                isInDefineSection += 1
                 continue
             }
             if line.matches(pattern: Constant.ifDefineEnd.declarationPattern) {
-                isInDefineSection = false
+                isInDefineSection -= 1
                 continue
             }
-            if isInDefineSection {
+            if isInDefineSection > 0 {
                 continue
             }
 
