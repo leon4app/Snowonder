@@ -33,6 +33,8 @@ open class ImportBlockDetector {
         static let ifDefineBegin = ImportCategory(title: "#ifdef Begin", declarationPattern: "^#ifdef \\s*.*\\n*", sortingComparisonResult: .orderedAscending)
         static let ifMacroBegin = ImportCategory(title: "#if Begin", declarationPattern: "^#if \\s*.*\\n*", sortingComparisonResult: .orderedAscending)
         static let ifDefineEnd = ImportCategory(title: "If Define End", declarationPattern: "^#endif\\s*\\n*", sortingComparisonResult: .orderedAscending)
+        static let diagnosticPushBegin = ImportCategory(title: "diagnostic Push Begin", declarationPattern: "^#pragma clang diagnostic push*", sortingComparisonResult: .orderedAscending)
+        static let diagnosticPushEnd = ImportCategory(title: "diagnostic Push End", declarationPattern: "^#pragma clang diagnostic pop*", sortingComparisonResult: .orderedAscending)
     }
     
     // MARK: - Initializers
@@ -86,6 +88,7 @@ open class ImportBlockDetector {
     open func declarations(from lines: [String], using group: ImportCategoriesGroup) -> ImportDeclarations {
         var matchLines = [String]()
         var isInDefineSection = 0
+        var isIndiagnosticPushSection = false
         for line in lines {
             // Workaround: Skip section wrap in #ifdef
             if line.matches(pattern: Constant.ifDefineBegin.declarationPattern) || line.matches(pattern: Constant.ifMacroBegin.declarationPattern) {
@@ -96,7 +99,16 @@ open class ImportBlockDetector {
                 isInDefineSection -= 1
                 continue
             }
-            if isInDefineSection > 0 {
+
+            // Workaround: Skip section wrap in #pragma clang diagnostic
+            if line.matches(pattern: Constant.diagnosticPushBegin.declarationPattern) {
+                isIndiagnosticPushSection = true
+            }
+            if line.matches(pattern: Constant.diagnosticPushEnd.declarationPattern) {
+                isIndiagnosticPushSection = false
+            }
+
+            if isInDefineSection > 0 || isIndiagnosticPushSection {
                 continue
             }
 

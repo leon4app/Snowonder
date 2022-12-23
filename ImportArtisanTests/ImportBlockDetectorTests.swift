@@ -29,6 +29,14 @@ class ImportBlockDetectorTests: XCTestCase {
         assert("#endif\n".matches(pattern: ImportBlockDetector.Constant.ifDefineEnd.declarationPattern))
     }
 
+    func testDiagnosticPushPattern() {
+        assert("#pragma clang diagnostic push\n".matches(pattern: ImportBlockDetector.Constant.diagnosticPushBegin.declarationPattern))
+        assert("#pragma clang diagnostic push \n".matches(pattern: ImportBlockDetector.Constant.diagnosticPushBegin.declarationPattern))
+        XCTAssertFalse("#pragma clang diagnostic ignored \"-Wdocumentation\"\n".matches(pattern: ImportBlockDetector.Constant.diagnosticPushBegin.declarationPattern))
+        assert("#pragma clang diagnostic pop\n".matches(pattern: ImportBlockDetector.Constant.diagnosticPushEnd.declarationPattern))
+        assert("#pragma clang diagnostic pop \n".matches(pattern: ImportBlockDetector.Constant.diagnosticPushEnd.declarationPattern))
+    }
+
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
